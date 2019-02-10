@@ -2,8 +2,12 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
+#include "TankTracks.h"
+#include "Public/UObject/ConstructorHelpers.h"
+#include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
 
 
@@ -16,6 +20,14 @@ ATank::ATank()
 	//No need to protect pointers as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 	
+	//set track static meshes
+	/**
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>StaticMeshTracks(TEXT("StaticMesh'/Game/Tank/tank_fbx_Track.tank_fbx_Track'"));
+	if (StaticMeshTracks.Object)
+	{
+		UTankTracks->Left
+	}
+	*/
 }
 
 // Called when the game starts or when spawned
