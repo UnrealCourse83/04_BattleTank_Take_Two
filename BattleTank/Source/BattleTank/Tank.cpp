@@ -6,7 +6,7 @@
 #include "Projectile.h"
 #include "TankBarrel.h"
 #include "TankTracks.h"
-#include "Public/UObject/ConstructorHelpers.h"
+//#include "Public/UObject/ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
 
