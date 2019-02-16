@@ -9,6 +9,7 @@
 
 class UTankTracks;
 
+
 /**
  * Used to drive the tank tracks
  */
@@ -19,13 +20,13 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 	
 public:
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialize(UTankTracks* LeftTrackToSet, UTankTracks* RightTrackToSet);
 	
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendMoveForward(float Throw);
 	
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendTurnRight(float Throw);
 
 private:
@@ -33,4 +34,5 @@ private:
 	UTankTracks* RightTrack = nullptr;
 
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 };

@@ -1,11 +1,15 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Nicholas Basansky 2019
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "Public/Tank.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
+	FoundAimingComponent(AimingComponent);
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -21,7 +25,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 	FVector OutHitLocation;
 	if (GetSightRayHitLocation(OutHitLocation)) // has a "side-effect", is going to line trace
 	{
