@@ -2,7 +2,9 @@
 
 #include "TankAIController.h"
 #include "TankAimingComponent.h"
-#include "Classes/AIController.h"
+#include "Engine/World.h"
+#include "GameFramework/PlayerController.h"
+
 
 
 void ATankAIController::BeginPlay()
@@ -27,13 +29,9 @@ void ATankAIController::Tick(float DeltaTime)
 
 	auto AimingComponent = AITank->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
-
-	//Aim towards the player
+		//Aim towards the player
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 	
-	// TODO fix firing
-	//AimingComponent->Fire(); //TODO Limit firing rate
+	AimingComponent->Fire(); //TODO Limit firing rate
 	
 }
-
-
