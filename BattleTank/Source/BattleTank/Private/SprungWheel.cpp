@@ -12,11 +12,15 @@ ASprungWheel::ASprungWheel()
 	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("MassWheelConstraint"));
 	SetRootComponent(MassWheelConstraint);
 	
-	Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
-	Mass->SetupAttachment(MassWheelConstraint);
+	//Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
+	BetterWheel = CreateDefaultSubobject<USphereComponent>(FName("BetterWheel"));
+	//Axle = CreateDefaultSubobject<UStaticMeshComponent>(FName("Axle"));
+	BetterAxle = CreateDefaultSubobject<USphereComponent>(FName("BetterAxle"));
+	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("AxleWheelConstraint"));
 
-	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
-	Wheel->SetupAttachment(MassWheelConstraint);
+	BetterWheel->SetupAttachment(BetterAxle);
+	BetterAxle->SetupAttachment(MassWheelConstraint);
+	AxleWheelConstraint->SetupAttachment(BetterAxle);
 
 }
 
@@ -24,7 +28,9 @@ ASprungWheel::ASprungWheel()
 void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	SetupConstraints();
+
 }
 
 // Called every frame
@@ -34,3 +40,15 @@ void ASprungWheel::Tick(float DeltaTime)
 
 }
 
+void ASprungWheel::SetupConstraints()
+{
+	if (!ensure(GetAttachParentActor())) { return; }
+	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
+	if (!BodyRoot) { return; }
+	MassWheelConstraint->SetConstrainedComponents(BodyRoot, NAME_None, BetterAxle, NAME_None);
+	if (AxleWheelConstraint)
+	{
+		AxleWheelConstraint->SetConstrainedComponents(BetterAxle, NAME_None, BetterWheel, NAME_None);
+	}
+	else { UE_LOG(LogTemp, Warning, TEXT("No AxleWheelConstraint found!")) }
+}

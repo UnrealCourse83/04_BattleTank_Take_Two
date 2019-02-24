@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Public/Templates/Casts.h"
-#include "Components/ActorComponent.h"
-#include "Components/SceneComponent.h"
 #include "SpawnPoint.generated.h"
 
 
